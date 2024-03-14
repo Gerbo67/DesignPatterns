@@ -131,10 +131,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Includes\Bridge.h" />
     <ClInclude Include="Includes\Builder.h" />
+    <ClInclude Include="Includes\Composite.h" />
     <ClInclude Include="Includes\FactoryMethods.h" />
     <ClInclude Include="Includes\Prerequisites.h" />
     <ClInclude Include="Includes\Prototype.h" />
+    <ClInclude Include="Includes\Proxy.h" />
     <ClInclude Include="Includes\Singleton.h" />
   </ItemGroup>
   <ItemGroup>

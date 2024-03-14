@@ -1,7 +1,14 @@
 #pragma once
 #include "Builder.h"
 #include "FactoryMethods.h"
-#include <Prototype.h>
+#include "Prototype.h"
+#include "Composite.h"
+#include "Bridge.h"
+#include "Template.h"
+#include "ChainsOfResponsability.h"
+#include "Proxy.h"
+#include "Adapter.h"
+#include "Decorator.h"
 
 int main() {
 
@@ -52,7 +59,7 @@ int main() {
 	delete product;
 #pragma endregion
 
-#pragma region Fernando BuilderMethod
+#pragma region FernandoBuilderMethod
 	DirectorPizza directorPizza;
 	ConstructorPizzaHawaiana constructorHawaiana;
 	ConstructorPizzaVegetariana constructorVegetariana;
@@ -70,7 +77,7 @@ int main() {
 	delete pizzaVegetariana;
 #pragma endregion
 
-#pragma region Profesor PrototypeMethod
+#pragma region ProfesorPrototypeMethod
 
 	// Prototype
 	Prototype* prototipo = new PrototypeConcreto();
@@ -86,7 +93,7 @@ int main() {
 #pragma endregion
 
 
-#pragma region Fernando PrototypeMethod
+#pragma region FernandoPrototypeMethod
 
 	DocumentoPrototype* prototipoDocumento = new DocumentoConcreto();
 	prototipoDocumento->configurar("Documento de ejemplo");
@@ -109,5 +116,154 @@ int main() {
 	delete copiaDocumento;
 
 #pragma endregion
+
+#pragma region ProfesorChainsOfResponsabilityMethod
+
+	manejadorConcretoC handleC(nullptr);
+	manejadorConcretoB handleB(&handleC);
+	manejadorConcretoA handleA(&handleB);
+
+	handleA.manejarSolicitud(50);
+	handleA.manejarSolicitud(5);
+	handleA.manejarSolicitud(15);
+	handleA.manejarSolicitud(19);
+	handleA.manejarSolicitud(3);
+
+#pragma endregion
+
+#pragma region FernandoChainsOfResponsabilityMethod
+
+	manejadorDirectorGeneral directorGeneral(nullptr);
+	manejadorGerente gerente(&directorGeneral);
+	manejadorDirectivo directivo(&gerente);
+	directivo.getMonto(800);
+	directivo.getMonto(3500);
+	directivo.getMonto(10000);
+
+#pragma endregion
+
+#pragma region ProfesorTemplateMethod
+
+	Juego* juego1 = new Ajedrez();
+	Juego* juego2 = new Monopoly();
+
+	juego1->jugar();
+	juego2->jugar();
+
+	delete juego1;
+	delete juego2;
+
+#pragma endregion
+
+#pragma region FernandoTemplateMethod
+
+	Refrigerador* refri1 = new RefrigeradorSamsung;
+	Refrigerador* refri2 = new RefrigeradorLG;
+	refri1->jugar();
+	refri2->jugar();
+	delete refri1;
+	delete refri2;
+
+#pragma endregion
+
+#pragma region ProfesorCompositeMethod
+
+	Leaf* leaf1 = new Leaf();
+	Leaf* leaf2 = new Leaf();
+
+	Compuesto* compuesto = new Compuesto();
+	compuesto->agregarLeaf(leaf1);
+	compuesto->agregarLeaf(leaf2);
+
+	compuesto->operacion();
+
+	delete leaf1;
+	delete leaf2;
+	delete compuesto;
+
+#pragma endregion
+
+#pragma region FernandoCompositeMethod
+
+	SistemaArchivo* archivo1 = new SistemaArchivo();
+	SistemaArchivo* archivo2 = new SistemaArchivo();
+	SistemaCarpeta* carpeta = new SistemaCarpeta();
+
+	carpeta->agregarSistema(archivo1);
+	carpeta->agregarSistema(archivo2);
+
+	carpeta->mostrarInfo();
+
+	delete archivo1;
+	delete archivo2;
+	delete carpeta;
+
+#pragma endregion
+
+#pragma region ProfesorBridgeMethod
+	ImplementacionConcretaA impA;
+	ImplementacionConcretaB impB;
+
+	AbstraccionRefinada ARA(&impA);
+	AbstraccionRefinada ARB(&impB);
+
+	ARA.operacion();
+	ARB.operacion();
+#pragma endregion
+
+#pragma region ProfesorProxyMethod
+
+	Proxy proxy;
+	proxy.operacion();
+	proxy.operacion();
+
+#pragma endregion
+
+#pragma region ProfesorAdapterMethod
+
+	// Adapter
+	InterfazVieja* objetoViejo = new InterfazVieja();
+	InterfazNueva* objetoNuevo = new Adapter(objetoViejo);
+
+	objetoNuevo->metodoNuevo();
+
+	delete objetoViejo;
+	delete objetoNuevo;
+
+#pragma endregion
+
+#pragma region ProfesorDecoratorMethod
+
+	// Por cada que pasa se agrega una "decoracion"
+	ComponenteConcreto* obj = new ComponenteConcreto();
+	DecoratorConcretoA* DecoratorA = new DecoratorConcretoA(obj);
+	DecoratorConcretoB* DecoratorB = new DecoratorConcretoB(DecoratorA);
+
+	obj->operacion();
+	DecoratorA->operacion();
+	DecoratorB->operacion();
+
+	delete obj;
+	delete DecoratorA;
+	delete DecoratorB;
+
+#pragma endregion
+
+#pragma region FernandoDecoratorMethod
+
+	Cafeteria* cafeteria = new Cafeteria();
+	Leche* cafeConLeche = new Leche(cafeteria);
+	Azucar* cafeConAzucar = new Azucar(cafeteria);
+
+	cafeteria->prepararCafe();
+	cafeConLeche->prepararCafe();
+	cafeConAzucar->prepararCafe();
+
+	delete cafeteria;
+	delete cafeConLeche;
+	delete cafeConAzucar;
+
+#pragma endregion
+
 	return 0;
 }
